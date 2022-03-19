@@ -3,6 +3,7 @@ package com.email.controller;
 import com.email.EmailManager;
 import com.email.model.EmailMessage;
 import com.email.model.EmailTreeItem;
+import com.email.model.SizeInteger;
 import com.email.view.ViewFactory;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,7 +40,7 @@ public class MainWindowController extends BaseController implements Initializabl
     private TableColumn<EmailMessage, String> recipientCol;
 
     @FXML
-    private TableColumn<EmailMessage, Integer> sizeCol;
+    private TableColumn<EmailMessage, SizeInteger> sizeCol;
 
     @FXML
     private TableColumn<EmailMessage, Date> dateCol;
@@ -100,7 +101,7 @@ public class MainWindowController extends BaseController implements Initializabl
         senderCol.setCellValueFactory((new PropertyValueFactory<EmailMessage, String>("sender")));
         subjectCol.setCellValueFactory((new PropertyValueFactory<EmailMessage, String>("subject")));
         recipientCol.setCellValueFactory((new PropertyValueFactory<EmailMessage, String>("recipient")));
-        sizeCol.setCellValueFactory((new PropertyValueFactory<EmailMessage, Integer>("size")));
+        sizeCol.setCellValueFactory((new PropertyValueFactory<EmailMessage, SizeInteger>("size")));
         dateCol.setCellValueFactory((new PropertyValueFactory<EmailMessage, Date>("date")));
 
     }
