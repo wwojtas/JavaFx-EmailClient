@@ -17,10 +17,15 @@ public class ViewFactory {
 
     private EmailManager emailManager;
     private ArrayList<Stage> avtiveStages;
+    private boolean mainViewInitialized = false;
 
     public ViewFactory(EmailManager emailManager) {
         this.emailManager = emailManager;
         avtiveStages = new ArrayList<Stage>();
+    }
+
+    public boolean isMainViewInitialized(){
+        return mainViewInitialized;
     }
 
     // View options handling
@@ -55,6 +60,7 @@ public class ViewFactory {
 
         BaseController controller = new MainWindowController(emailManager, this, "MainWindow.fxml");
         intializeStage(controller);
+        mainViewInitialized = true;
     }
 
     public void showOptionsWindow(){
