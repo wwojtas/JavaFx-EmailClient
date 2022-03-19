@@ -9,4 +9,5 @@ module JavaFxEmailClient {
     opens com.email;
     opens com.email.view;
     opens com.email.controller;
+    opens com.email.model;
 }
