@@ -21,7 +21,6 @@ public class MainWindowController extends BaseController implements Initializabl
 
     private MenuItem markUnreadMenuItem = new MenuItem("mark as unread");
     private MenuItem deleteMessageMenuItem = new MenuItem("delete message");
-
     @FXML
     private TreeView<String> emailsTreeView;
 
@@ -60,6 +59,10 @@ public class MainWindowController extends BaseController implements Initializabl
     void addAccountAction() {
         viewFactory.showLoginWindow();
     }
+    @FXML
+    void composeMessageAction() {
+        viewFactory.showComposeMessageWindow();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
@@ -74,10 +77,10 @@ public class MainWindowController extends BaseController implements Initializabl
     }
 
     private void setUpContextMenus() {
-        markUnreadMenuItem.setOnAction(e -> {
+        markUnreadMenuItem.setOnAction(event -> {
             emailManager.setUnRead();
         });
-        deleteMessageMenuItem.setOnAction(e -> {
+        deleteMessageMenuItem.setOnAction(event -> {
             emailManager.deleteSelectedMessage();
             emailWebView.getEngine().loadContent("");
         });

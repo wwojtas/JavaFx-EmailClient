@@ -1,10 +1,7 @@
 package com.email.view;
 
 import com.email.EmailManager;
-import com.email.controller.BaseController;
-import com.email.controller.LoginWindowController;
-import com.email.controller.MainWindowController;
-import com.email.controller.OptionsWindowController;
+import com.email.controller.*;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -16,19 +13,19 @@ import java.util.ArrayList;
 public class ViewFactory {
 
     private EmailManager emailManager;
-    private ArrayList<Stage> avtiveStages;
+    private ArrayList<Stage> activeStages;
     private boolean mainViewInitialized = false;
 
     public ViewFactory(EmailManager emailManager) {
         this.emailManager = emailManager;
-        avtiveStages = new ArrayList<Stage>();
+        activeStages = new ArrayList<Stage>();
     }
 
     public boolean isMainViewInitialized(){
         return mainViewInitialized;
     }
 
-    // View options handling
+    //View options handling:
     private ColorTheme colorTheme = ColorTheme.DEFAULT;
     private FontSize fontSize = FontSize.MEDIUM;
 
@@ -48,35 +45,39 @@ public class ViewFactory {
         this.fontSize = fontSize;
     }
 
-    public void showLoginWindow(){
+    public void showLoginWindow() {
         System.out.println("show login window called");
 
         BaseController controller = new LoginWindowController(emailManager, this, "LoginWindow.fxml");
-        intializeStage(controller);
+        initializeStage(controller);
     }
-
     public void showMainWindow(){
         System.out.println("main window called");
 
         BaseController controller = new MainWindowController(emailManager, this, "MainWindow.fxml");
-        intializeStage(controller);
+        initializeStage(controller);
         mainViewInitialized = true;
     }
 
-    public void showOptionsWindow(){
-        System.out.println("options widnow called");
-        BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
-        intializeStage(controller);
+    public void showComposeMessageWindow() {
+
+        BaseController controller = new ComposeMessageController(emailManager, this, "ComposeMessageWindow.fxml");
+        initializeStage(controller);
     }
 
-    private void intializeStage(BaseController baseController){
+    public void showOptionsWindow(){
+        System.out.println("options window called");
+        BaseController controller = new OptionsWindowController(emailManager, this, "OptionsWindow.fxml");
+        initializeStage(controller);
+    }
 
+    private void initializeStage(BaseController baseController){
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(baseController.getFxmlName()));
         fxmlLoader.setController(baseController);
         Parent parent;
         try {
             parent = fxmlLoader.load();
-        } catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
             return;
         }
@@ -84,20 +85,22 @@ public class ViewFactory {
         Stage stage = new Stage();
         stage.setScene(scene);
         stage.show();
-        avtiveStages.add(stage);
+        activeStages.add(stage);
     }
 
-    public void closeStage(Stage stageToClose){
+    public  void closeStage(Stage stageToClose){
         stageToClose.close();
-        avtiveStages.remove(stageToClose);
+        activeStages.remove(stageToClose);
     }
 
     public void updateStyles() {
-        for(Stage stage: avtiveStages) {
+        for (Stage stage: activeStages) {
             Scene scene = stage.getScene();
             scene.getStylesheets().clear();
             scene.getStylesheets().add(getClass().getResource(ColorTheme.getCssPath(colorTheme)).toExternalForm());
             scene.getStylesheets().add(getClass().getResource(FontSize.getCssPath(fontSize)).toExternalForm());
         }
     }
+
+
 }
