@@ -23,6 +23,9 @@ public class EmailMessage {
     List<MimeBodyPart> attachmentList = new ArrayList<MimeBodyPart>();
     private boolean hasAttachments = false;
 
+    public boolean hasAttachments() {
+        return hasAttachments;
+    }
 
     public EmailMessage(String subject, String sender, String recipient, int size, Date date, boolean isRead, Message message){
         this.subject = new SimpleStringProperty(subject);
@@ -51,12 +54,15 @@ public class EmailMessage {
     public boolean isRead(){
         return isRead;
     }
-
     public void setRead(boolean read) {
         isRead = read;
     }
     public Message getMessage(){
         return this.message;
+    }
+
+    public List<MimeBodyPart> getAttachmentList(){
+        return attachmentList;
     }
 
 
